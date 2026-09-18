@@ -59,7 +59,7 @@ Deleting a genre also deletes its related movies because the relationship uses D
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/HashemQuraan-402/Vidly.git
+git clone https://github.com/HashemQuraan-402/vidly-django-movie-catalog.git
 cd Vidly
 ```
 
@@ -131,6 +131,16 @@ python manage.py runserver
 ```
 
 Open <http://127.0.0.1:8000/> in your browser.
+
+### 8. Collect static files for deployment
+
+For a production build, generate the static output locally or in the hosting platform's build step:
+
+```bash
+python manage.py collectstatic --noinput
+```
+
+The generated root `static/` directory is ignored by Git and should not be committed. Django and WhiteNoise regenerate it from the installed applications during deployment.
 
 ## Application Routes
 

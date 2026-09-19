@@ -27,7 +27,7 @@ Vidly is a lightweight movie-catalog web application built with Django. It demon
 ## Project Structure
 
 ```text
-Vidly/
+vidly-django-movie-catalog/
 ├── api/                    # Tastypie movie API resource
 ├── movies/                 # Movie models, views, routes, and templates
 │   ├── migrations/         # Database schema migrations
@@ -60,7 +60,7 @@ Deleting a genre also deletes its related movies because the relationship uses D
 
 ```bash
 git clone https://github.com/HashemQuraan-402/vidly-django-movie-catalog.git
-cd Vidly
+cd vidly-django-movie-catalog
 ```
 
 ### 2. Create a virtual environment

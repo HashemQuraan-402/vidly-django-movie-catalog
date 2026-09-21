@@ -1,5 +1,7 @@
 # Vidly — Django Movie Catalog
 
+[![Django CI](https://github.com/HashemQuraan-402/vidly-django-movie-catalog/actions/workflows/django-ci.yml/badge.svg)](https://github.com/HashemQuraan-402/vidly-django-movie-catalog/actions/workflows/django-ci.yml)
+
 Vidly is a lightweight movie-catalog web application built with Django. It demonstrates server-side rendering, relational data modeling, Django administration, and a REST-style movie resource.
 
 ## Features
@@ -12,11 +14,12 @@ Vidly is a lightweight movie-catalog web application built with Django. It demon
 - Access movie data through a Tastypie API resource.
 - Configure sensitive settings through environment variables.
 - Serve static files with WhiteNoise.
+- Run automated dependency audits, deployment checks, and tests.
 
 ## Tech Stack
 
 - Python
-- Django 5.2.7
+- Django 5.2.17
 - SQLite
 - Django Tastypie
 - HTML and Django Templates
@@ -28,6 +31,7 @@ Vidly is a lightweight movie-catalog web application built with Django. It demon
 
 ```text
 vidly-django-movie-catalog/
+├── .github/workflows/      # Automated security and test workflow
 ├── api/                    # Tastypie movie API resource
 ├── movies/                 # Movie models, views, routes, and templates
 │   ├── migrations/         # Database schema migrations
@@ -53,7 +57,7 @@ Deleting a genre also deletes its related movies because the relationship uses D
 
 ### Prerequisites
 
-- Python 3.13 recommended by the included `Pipfile`
+- Python 3.14
 - Git
 
 ### 1. Clone the repository
@@ -166,17 +170,23 @@ The SQLite database is created locally and is intentionally excluded from Git, s
 
 ## Validation
 
-Run Django's configuration checks:
+Install the development audit tool:
 
-```bash
-python manage.py check
+```powershell
+python -m pip install pip-audit
 ```
 
-Run the test command:
+Run the local validation commands:
 
-```bash
+```powershell
+python -m pip_audit -r requirements.txt
+python manage.py check
+python manage.py makemigrations --check --dry-run
+python manage.py collectstatic --noinput
 python manage.py test
 ```
+
+GitHub Actions additionally runs Django's production deployment checks on every pull request and push to `main`.
 
 ## Configuration and Security
 
@@ -185,13 +195,15 @@ python manage.py test
 - `DJANGO_ALLOWED_HOSTS` accepts a comma-separated list of hosts.
 - `db.sqlite3` and local environment files are ignored by Git.
 - Production secrets should be configured through the hosting provider, never committed to the repository.
+- Production mode redirects HTTP to HTTPS and enables secure session and CSRF cookies.
+- Production mode enables one-year HSTS with subdomain and preload directives.
+- The movie API uses read-only authorization and is covered by automated tests.
 
 ## Future Improvements
 
 - Add search, filtering, and pagination.
 - Add user authentication and authorization for the API.
 - Add create, update, and delete screens outside the admin site.
-- Add model, view, and API test coverage.
 - Add API documentation and validation.
 - Use PostgreSQL for production deployment.
 - Add screenshots and a hosted demonstration.
